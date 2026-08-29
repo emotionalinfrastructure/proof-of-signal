@@ -1,42 +1,63 @@
+# EII Registry Conformance Workflow v1.2
+# Changes to any registry control, evidence record, validator, fixture, or test surface
+# MUST enter this workflow before the repository state can be treated as CI-checked.
 name: Registry Conformance
 
 on:
   pull_request:
     paths:
+      # Registry identity and public control surface
       - "README.md"
       - "REGISTRY-SCHEMA.md"
       - "REGISTRY-INDEX.md"
       - "registry-index.json"
       - "registry-index.schema.json"
+
+      # Governance and record-control documents
       - "RECORD-TEMPLATE.md"
       - "CONTRIBUTING.md"
       - "GOVERNANCE.md"
       - "SECURITY.md"
       - "TEST-MATRIX.md"
+
+      # Provenance evidence records
       - "weekly-proof/**"
-      - "scripts/validate_registry.py"
-      - "tests/test_registry_conformance.py"
-      - "tests/fixtures/**"
+
+      # Executable conformance implementation
+      - "scripts/**"
+      - "tests/**"
+
+      # CI control plane
       - ".github/workflows/registry-conformance.yml"
+
   push:
     branches:
       - main
     paths:
+      # Registry identity and public control surface
       - "README.md"
       - "REGISTRY-SCHEMA.md"
       - "REGISTRY-INDEX.md"
       - "registry-index.json"
       - "registry-index.schema.json"
+
+      # Governance and record-control documents
       - "RECORD-TEMPLATE.md"
       - "CONTRIBUTING.md"
       - "GOVERNANCE.md"
       - "SECURITY.md"
       - "TEST-MATRIX.md"
+
+      # Provenance evidence records
       - "weekly-proof/**"
-      - "scripts/validate_registry.py"
-      - "tests/test_registry_conformance.py"
-      - "tests/fixtures/**"
+
+      # Executable conformance implementation
+      - "scripts/**"
+      - "tests/**"
+
+      # CI control plane
       - ".github/workflows/registry-conformance.yml"
+
   workflow_dispatch:
 
 permissions:
