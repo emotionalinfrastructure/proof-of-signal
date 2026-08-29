@@ -1,0 +1,32 @@
+{
+  "registry_id": "EII-REG-INDEX-001",
+  "registry_version": "1.0",
+  "schema_id": "EII-REG-SCHEMA-001",
+  "schema_version": "1.0",
+  "updated": "2026-08-28",
+  "repository": "emotionalinfrastructure/proof-of-signal",
+  "records": [
+    {
+      "record_id": "EII-WPR-2026-08-28",
+      "record_type": "WPR",
+      "artifact_family": [
+        "EII-TIO Observatory pilot validation",
+        "EII organizational planning"
+      ],
+      "artifact_maturity": ["Candidate", "Pre-execution"],
+      "publication_date": "2026-08-28",
+      "controlling_schema": {
+        "id": "EII-REG-SCHEMA-001",
+        "version": "1.0"
+      },
+      "commit_sha": "c39d83d09e5dbb23ac8cb8c67fa2100df959a511",
+      "supersession": {
+        "status": "Active",
+        "supersedes": [],
+        "superseded_by": []
+      },
+      "verification_path": "weekly-proof/2026-08-28.md",
+      "verification_uri": "https://github.com/emotionalinfrastructure/proof-of-signal/blob/main/weekly-proof/2026-08-28.md"
+    }
+  ]
+}
