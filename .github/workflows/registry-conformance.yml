@@ -12,9 +12,11 @@ on:
       - "CONTRIBUTING.md"
       - "GOVERNANCE.md"
       - "SECURITY.md"
+      - "TEST-MATRIX.md"
       - "weekly-proof/**"
       - "scripts/validate_registry.py"
       - "tests/test_registry_conformance.py"
+      - "tests/fixtures/**"
       - ".github/workflows/registry-conformance.yml"
   push:
     branches:
@@ -29,9 +31,11 @@ on:
       - "CONTRIBUTING.md"
       - "GOVERNANCE.md"
       - "SECURITY.md"
+      - "TEST-MATRIX.md"
       - "weekly-proof/**"
       - "scripts/validate_registry.py"
       - "tests/test_registry_conformance.py"
+      - "tests/fixtures/**"
       - ".github/workflows/registry-conformance.yml"
   workflow_dispatch:
 
@@ -49,10 +53,11 @@ jobs:
     timeout-minutes: 5
 
     steps:
-      - name: Check out repository
+      - name: Check out repository history
         uses: actions/checkout@v4
         with:
           persist-credentials: false
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -65,5 +70,5 @@ jobs:
       - name: Run deterministic registry conformance checks
         run: python scripts/validate_registry.py
 
-      - name: Run adversarial fail-closed tests
+      - name: Run fixture-driven fail-closed tests
         run: python -m unittest -v tests.test_registry_conformance
