@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/emotionalinfrastructure/proof-of-signal/blob/main/registry-index.schema.json",
+  "title": "EII Public Provenance Registry Index",
+  "description": "Machine-validation schema for the Emotional Infrastructure Institute Public Provenance Registry.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["registry_id", "registry_version", "schema_id", "schema_version", "updated", "repository", "records"],
+  "properties": {
+    "registry_id": {"const": "EII-REG-INDEX-001"},
+    "registry_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+$"},
+    "schema_id": {"const": "EII-REG-SCHEMA-001"},
+    "schema_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+$"},
+    "updated": {"type": "string", "format": "date"},
+    "repository": {"const": "emotionalinfrastructure/proof-of-signal"},
+    "records": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/record"}
+    }
+  },
+  "$defs": {
+    "record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["record_id", "record_type", "artifact_family", "artifact_maturity", "publication_date", "controlling_schema", "commit_sha", "supersession", "verification_path", "verification_uri"],
+      "properties": {
+        "record_id": {"type": "string", "pattern": "^EII-(WPR|APR|RPR|TPR|OPR|HPR)-[A-Za-z0-9._-]+$"},
+        "record_type": {"enum": ["WPR", "APR", "RPR", "TPR", "OPR", "HPR"]},
+        "artifact_family": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "artifact_maturity": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"enum": ["Draft", "Candidate", "Pre-execution", "Pilot", "Evaluated", "Validated", "Adopted", "Deployed", "Superseded", "Withdrawn", "Historical"]}},
+        "publication_date": {"type": "string", "format": "date"},
+        "controlling_schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "version"],
+          "properties": {
+            "id": {"const": "EII-REG-SCHEMA-001"},
+            "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+$"}
+          }
+        },
+        "commit_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "supersession": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status", "supersedes", "superseded_by"],
+          "properties": {
+            "status": {"enum": ["Active", "Partially Superseded", "Superseded", "Withdrawn", "Historical"]},
+            "supersedes": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+            "superseded_by": {"type": "array", "uniqueItems": true, "items": {"type": "string"}}
+          }
+        },
+        "verification_path": {"type": "string", "minLength": 1},
+        "verification_uri": {"type": "string", "format": "uri", "pattern": "^https://github\\.com/emotionalinfrastructure/proof-of-signal/"}
+      }
+    }
+  }
+}
