@@ -1,0 +1,22 @@
+{
+  "registry_id": "EII-REG-INDEX-001",
+  "registry_version": "1.0",
+  "schema_id": "EII-REG-SCHEMA-001",
+  "schema_version": "1.0",
+  "updated": "2026-08-29",
+  "repository": "emotionalinfrastructure/proof-of-signal",
+  "records": [
+    {
+      "record_id": "EII-WPR-FIXTURE-VALID",
+      "record_type": "WPR",
+      "artifact_family": ["Fixture governance artifact"],
+      "artifact_maturity": ["Candidate"],
+      "publication_date": "2026-08-29",
+      "controlling_schema": {"id": "EII-REG-SCHEMA-001", "version": "1.0"},
+      "commit_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "supersession": {"status": "Active", "supersedes": [], "superseded_by": []},
+      "verification_path": "records/valid-record.md",
+      "verification_uri": "https://github.com/emotionalinfrastructure/proof-of-signal/blob/main/tests/fixtures/records/valid-record.md"
+    }
+  ]
+}
