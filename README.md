@@ -13,15 +13,24 @@
 
 This repository is the public provenance registry of the **Emotional Infrastructure Institute (EII)**. It preserves controlled records linking selected research, governance, technical, and organizational artifacts to cryptographic identifiers and dated Git history.
 
-The registry is designed to answer a narrow set of verifiable questions:
+The registry is designed to answer a narrow set of verifiable questions: what artifact was recorded, which version was represented, what cryptographic identifier corresponds to the exact file, when the integrity record entered public Git history, and what maturity and evidentiary boundaries applied at that time.
 
-1. What artifact was recorded?
-2. Which version or file state was represented?
-3. What cryptographic identifier corresponds to that exact file?
-4. When was the integrity record committed publicly?
-5. What development status and evidentiary boundary applied at that time?
+The repository is an **evidence-management and provenance surface**, not a substitute for peer review, empirical validation, standards adoption, institutional approval, regulatory assessment, or legal adjudication.
 
-The repository is therefore an **evidence-management and provenance surface**, not a substitute for peer review, empirical validation, standards adoption, institutional approval, regulatory assessment, or legal adjudication.
+---
+
+## Registry Control Surface
+
+| Control | Function |
+|---|---|
+| [`REGISTRY-SCHEMA.md`](REGISTRY-SCHEMA.md) | Normative admission, maturity, hashing, evidence-boundary, and acceptance requirements |
+| [`REGISTRY-INDEX.md`](REGISTRY-INDEX.md) | Canonical human-readable ledger of admitted provenance records |
+| [`registry-index.json`](registry-index.json) | Machine-readable companion registry |
+| [`registry-index.schema.json`](registry-index.schema.json) | JSON Schema for structural validation of the machine-readable registry |
+| [`RECORD-TEMPLATE.md`](RECORD-TEMPLATE.md) | Controlled starting template for future provenance records |
+| [`CONTRIBUTING.md`](CONTRIBUTING.md) | Admission workflow, commit conventions, and correction controls |
+| [`GOVERNANCE.md`](GOVERNANCE.md) | Registry stewardship, hierarchy, versioning, and change control |
+| [`SECURITY.md`](SECURITY.md) | Integrity-defect and sensitive-disclosure guidance |
 
 ---
 
@@ -39,57 +48,41 @@ Evidence Record
 Controlled Archive
    ↓
 Public Git Commit
+   ↓
+Registry Index
 ```
 
-Each completed registry entry should preserve enough information for an independent reviewer to identify the represented artifact, reproduce its cryptographic digest from the corresponding file, and determine the status asserted at the time of publication.
+Each admitted registry entry is intended to preserve enough information for an independent reviewer to identify the represented artifact, reproduce its cryptographic digest from the corresponding file when that file is available, inspect its stated maturity, and understand the limits of the evidence being presented.
 
 ---
 
-## Registry
+## Active Registry
 
 | Reporting Period | Record | Integrity Method | Status |
 |---|---|---|---|
 | 2026-08-28 | [`EII-WPR-2026-08-28`](weekly-proof/2026-08-28.md) | SHA-256 | Published |
 
-Additional records will be added as controlled provenance packages are completed.
-
----
-
-## What a Registry Record Contains
-
-A professional EII provenance record may contain:
-
-| Field | Function |
-|---|---|
-| **Record ID** | Stable identifier for the provenance record |
-| **Reporting period** | Time boundary associated with the recorded work |
-| **Artifact name** | Exact filename or controlled artifact identifier |
-| **Version/status** | Development state represented by the record |
-| **SHA-256** | Cryptographic digest of the exact file bytes |
-| **Evidence boundary** | Explicit statement of what the record does and does not establish |
-| **Git history** | Public chronology of the registry entry and subsequent revisions |
-
-Where appropriate, records may also identify supporting archives, specifications, validation packages, implementation artifacts, or related evidence records.
+The authoritative master ledger is maintained in [`REGISTRY-INDEX.md`](REGISTRY-INDEX.md). Automated consumers SHOULD use [`registry-index.json`](registry-index.json) and validate its structure against [`registry-index.schema.json`](registry-index.schema.json).
 
 ---
 
 ## Verification
 
-SHA-256 digests are used to identify exact file states. To verify an artifact:
+SHA-256 digests identify exact file states. A verifier with access to a represented artifact can compute its digest and compare the result with the value recorded in the corresponding provenance record.
+
+Linux:
 
 ```bash
 sha256sum <filename>
 ```
 
-On macOS:
+macOS:
 
 ```bash
 shasum -a 256 <filename>
 ```
 
-Compare the resulting digest with the value recorded in the corresponding registry entry. A matching digest indicates that the file being examined is byte-for-byte identical to the file represented by that cryptographic identifier.
-
-A hash mismatch means the file is different. It does not, by itself, determine why the file differs or whether the difference is authorized.
+A matching digest indicates that the file being examined is byte-for-byte identical to the file represented by that cryptographic identifier. A mismatch establishes only that the bytes differ; it does not determine why they differ or whether the difference is authorized.
 
 ---
 
@@ -97,23 +90,11 @@ A hash mismatch means the file is different. It does not, by itself, determine w
 
 This registry uses cryptographic integrity records and Git history as **provenance evidence with defined limits**.
 
-A matching SHA-256 digest can establish that two file instances are byte-for-byte identical. Git history can establish repository chronology and show that particular content was committed to this repository at a recorded point in its history.
+A matching SHA-256 digest can establish byte-for-byte identity. Git history can establish repository chronology and show that particular content appeared in this repository at a recorded point in its history.
 
-These mechanisms do **not**, independently, establish:
+These mechanisms do **not**, independently, establish originality, novelty, priority of authorship, intellectual-property ownership, truth of claims contained inside an artifact, causation or hidden system behavior, empirical validity, institutional sponsorship or approval, regulatory compliance, standards-body adoption, production readiness, or legal entitlement.
 
-- originality or novelty;
-- priority of authorship;
-- ownership of intellectual property;
-- truth of claims contained inside an artifact;
-- causation or hidden system behavior;
-- empirical or scientific validity;
-- institutional sponsorship, endorsement, or approval;
-- regulatory compliance;
-- standards-body adoption;
-- production readiness; or
-- legal entitlement or liability.
-
-Those determinations require evidence and procedures appropriate to the specific claim being evaluated.
+Those determinations require evidence and procedures appropriate to the claim being evaluated.
 
 ---
 
@@ -121,9 +102,9 @@ Those determinations require evidence and procedures appropriate to the specific
 
 **Emotional Infrastructure™** is a governance framework for AI-mediated trust environments. The work examines how automated and adaptive communication systems can shape trust, reliance, interpretation, disclosure, consent, and decision-making across repeated interactions, and how those effects can be made more visible, reviewable, contestable, and accountable.
 
-EII's broader research and implementation work includes longitudinal AI interaction governance, disclosure architecture, consent boundaries, auditability, human review pathways, behavioral-signal governance, trust receipts, and mechanisms for preserving human agency in AI-assisted environments.
+EII's broader work includes longitudinal AI interaction governance, disclosure architecture, consent boundaries, auditability, human review pathways, behavioral-signal governance, trust receipts, and mechanisms for preserving human agency in AI-assisted environments.
 
-Artifacts represented in this registry may exist at different maturity levels. A registry entry therefore records development status explicitly rather than treating publication, hashing, or repository inclusion as evidence that an artifact has been validated or adopted.
+Artifacts represented in this registry may exist at different maturity levels. Registry inclusion therefore records provenance and status rather than treating publication, hashing, or repository inclusion as evidence that an artifact has been validated or adopted.
 
 ---
 
@@ -139,17 +120,17 @@ Historical material is retained as part of the repository record. Its presence s
 
 ## Record-Control Principles
 
-EII provenance records follow five operating principles:
-
 **Integrity.** Hashes identify exact artifact states rather than general document titles.
 
-**Traceability.** Records connect artifacts, versions, integrity identifiers, archives, and public chronology.
+**Traceability.** Records connect artifacts, versions, integrity identifiers, archives, public chronology, and registry status.
 
-**Status discipline.** Candidate, draft, pilot, validated, adopted, and deployed states are not treated as interchangeable.
+**Status discipline.** Draft, candidate, pre-execution, pilot, evaluated, validated, adopted, and deployed states are not interchangeable.
 
 **Claim discipline.** The evidentiary meaning of a hash, timestamp, commit, test, or research artifact is stated narrowly and explicitly.
 
-**Preservation.** Historical records are preserved without allowing superseded claims to silently define the Institute's current position.
+**Preservation.** Historical records remain traceable without allowing superseded claims to silently define current EII positions.
+
+**Machine consistency.** Human-readable and machine-readable registry surfaces are expected to represent the same admitted record set.
 
 ---
 
@@ -177,6 +158,7 @@ The Institute's operating objective is to translate governance problems into mec
 
 `ACTIVE PROVENANCE REGISTRY`
 
+Control baseline: **EII-REG-SCHEMA-001 v1.0**  
 Last structural revision: **2026-08-28**
 
 ---
