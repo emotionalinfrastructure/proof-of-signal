@@ -1,7 +1,7 @@
-# EII Registry Conformance Workflow v1.3
+# EII Registry Conformance Workflow v1.4
 # Changes to any registry control, evidence record, validator, fixture, test surface,
-# architecture description, or implementation-status inventory MUST enter this
-# workflow before the repository state can be treated as CI-checked.
+# architecture description, implementation-status inventory, or canonical CI execution
+# evidence MUST enter this workflow before the repository state can be treated as CI-checked.
 name: Registry Conformance
 
 on:
@@ -14,9 +14,10 @@ on:
       - "registry-index.json"
       - "registry-index.schema.json"
 
-      # Governance, architecture, and implementation-control documents
+      # Governance, architecture, implementation, and assurance-control documents
       - "ARCHITECTURE.md"
       - "IMPLEMENTATION-INVENTORY.md"
+      - "CI-EVIDENCE.md"
       - "RECORD-TEMPLATE.md"
       - "CONTRIBUTING.md"
       - "GOVERNANCE.md"
@@ -44,9 +45,10 @@ on:
       - "registry-index.json"
       - "registry-index.schema.json"
 
-      # Governance, architecture, and implementation-control documents
+      # Governance, architecture, implementation, and assurance-control documents
       - "ARCHITECTURE.md"
       - "IMPLEMENTATION-INVENTORY.md"
+      - "CI-EVIDENCE.md"
       - "RECORD-TEMPLATE.md"
       - "CONTRIBUTING.md"
       - "GOVERNANCE.md"
