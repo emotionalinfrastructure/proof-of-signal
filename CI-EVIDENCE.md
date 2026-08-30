@@ -1,7 +1,7 @@
 # EII Registry Conformance CI Execution Evidence
 
 **Document ID:** EII-REG-CI-001  
-**Version:** 1.1  
+**Version:** 1.2  
 **Status:** Canonical CI execution record  
 **Current workflow:** Registry Conformance v1.4  
 **Repository:** `emotionalinfrastructure/proof-of-signal`  
@@ -11,44 +11,45 @@
 
 ## 1. Purpose
 
-This record preserves verified GitHub Actions execution evidence for the EII Registry Conformance control plane while maintaining prior successful executions as immutable historical provenance.
+This record preserves verified GitHub Actions execution evidence for the EII Registry Conformance control plane while maintaining prior successful executions as historical provenance.
 
-Version 1.1 advances the current canonical execution reference from Registry Conformance v1.3 / run #9 to Registry Conformance v1.4 / run #10. Run #9 remains recorded below as historical evidence and is not overwritten, recharacterized, or treated as evidence for controls introduced after v1.3.
+Version 1.2 advances the canonical execution reference to Registry Conformance v1.4 / run #11 because that run directly exercised the newly governed `CI-EVIDENCE.md` trigger path. Runs #9 and #10 remain preserved as historical execution lineage and SHALL NOT be overwritten or retroactively treated as evidence for controls that did not yet exist at those repository states.
 
 This record is bounded to the automated controls actually executed during each identified run.
 
 ---
 
-## 2. Current Canonical Execution: Workflow v1.4 / Run #10
+## 2. Current Canonical Execution: Workflow v1.4 / Run #11
 
 | Field | Verified value |
 |---|---|
 | Repository | `emotionalinfrastructure/proof-of-signal` |
 | Workflow | `Registry Conformance` |
 | Workflow path | `.github/workflows/registry-conformance.yml` |
-| Workflow version represented by commit | `v1.4` |
+| Workflow version | `v1.4` |
+| Triggered control artifact | `CI-EVIDENCE.md` |
 | Head branch | `main` |
-| Head commit | `404e509eba958166c264636e0376d2b619880666` |
-| Commit message | `ci: govern canonical CI execution evidence` |
+| Head commit | `b2802ed508af8c6ab055b53f07aca8b44ad0e95d` |
+| Commit message | `docs: advance canonical CI evidence to v1.4 run 10` |
 | Trigger event | `push` |
-| Workflow run number | `10` |
-| Workflow run ID | `33282520547` |
+| Workflow run number | `11` |
+| Workflow run ID | `33282600271` |
 | Run attempt | `1` |
 | Run status | `completed` |
 | Run conclusion | `success` |
-| Run started | `2026-08-30T00:06:19Z` |
-| Run updated/completed | `2026-08-30T00:06:28Z` |
-| Check suite ID | `90195986792` |
+| Run started | `2026-08-30T00:08:14Z` |
+| Run updated/completed | `2026-08-30T00:08:29Z` |
+| Check suite ID | `90196177087` |
 
 ### 2.1 Job evidence
 
 | Field | Verified value |
 |---|---|
 | Job name | `Validate registry controls` |
-| Job ID | `99179974414` |
+| Job ID | `99180177120` |
 | Job status | `completed` |
 | Job conclusion | `success` |
-| Workflow run ID | `33282520547` |
+| Workflow run ID | `33282600271` |
 
 ### 2.2 Step outcomes
 
@@ -73,25 +74,69 @@ python -m unittest -v tests.test_registry_conformance
 
 Both concluded `success`.
 
-This establishes that the repository state checked out for commit `404e509eba958166c264636e0376d2b619880666` did not trigger a failure under the deterministic controls implemented by the validator at that state and that the adversarial/unit test suite completed successfully for the defect classes represented by that suite.
+---
+
+## 3. Direct Trigger-Path Validation
+
+Run #11 is the first verified execution in which the triggering commit modified `CI-EVIDENCE.md` itself after workflow v1.4 added that file to both `pull_request.paths` and `push.paths`.
+
+The observed execution chain was:
+
+```text
+CI-EVIDENCE.md modification
+        |
+        v
+push to main
+        |
+        v
+v1.4 path trigger matched
+        |
+        v
+Registry Conformance executed
+        |
+        +--> deterministic validator: success
+        |
+        +--> fixture-driven fail-closed tests: success
+        |
+        v
+workflow run #11: success
+```
+
+This provides direct operational evidence for the tested push-trigger path. It establishes that a change to `CI-EVIDENCE.md` at commit `b2802ed508af8c6ab055b53f07aca8b44ad0e95d` caused Registry Conformance v1.4 to execute and complete successfully.
+
+The evidence does not establish that every possible repository mutation is forced through this workflow. Path-trigger behavior and non-bypassable branch or repository policy enforcement are separate controls.
 
 ---
 
-## 3. Workflow v1.4 Control-Surface Significance
+## 4. Historical Execution Lineage
 
-Workflow v1.4 added `CI-EVIDENCE.md` to both the `pull_request.paths` and `push.paths` controlled surfaces. The workflow therefore responds to changes to its canonical execution-evidence record in addition to the previously governed architecture, implementation inventory, specification, registry indexes, JSON Schema, governance documents, test matrix, provenance records, validator implementation, tests, fixtures, and workflow definition.
+Prior executions remain separately attributable to their original repository states.
 
-The successful execution of run #10 establishes that GitHub Actions accepted and executed the v1.4 workflow definition at commit `404e509eba958166c264636e0376d2b619880666`, and that its deterministic validator and fixture-driven fail-closed test stages completed successfully.
+### 4.1 Workflow v1.4 / Run #10
 
-This does not make the workflow impossible to bypass by every repository mutation. Path-trigger coverage and branch/ruleset enforcement are distinct controls. No branch-protection or repository-ruleset conclusion is made by this record unless separately verified.
+| Field | Historical verified value |
+|---|---|
+| Workflow version | `v1.4` |
+| Head commit | `404e509eba958166c264636e0376d2b619880666` |
+| Commit message | `ci: govern canonical CI execution evidence` |
+| Trigger event | `push` |
+| Workflow run number | `10` |
+| Workflow run ID | `33282520547` |
+| Run attempt | `1` |
+| Run status | `completed` |
+| Run conclusion | `success` |
+| Run started | `2026-08-30T00:06:19Z` |
+| Run updated/completed | `2026-08-30T00:06:28Z` |
+| Check suite ID | `90195986792` |
+| Job name | `Validate registry controls` |
+| Job ID | `99179974414` |
+| Job conclusion | `success` |
+| Deterministic validator | `success` |
+| Fixture-driven fail-closed tests | `success` |
 
----
+Run #10 established that the v1.4 workflow definition itself executed successfully after adding `CI-EVIDENCE.md` to the controlled trigger surface. It did not yet directly exercise a change to `CI-EVIDENCE.md`.
 
-## 4. Historical Execution Provenance
-
-Prior successful execution evidence SHALL remain distinguishable from the current canonical execution rather than being overwritten.
-
-### 4.1 Historical record: Workflow v1.3 / Run #9
+### 4.2 Workflow v1.3 / Run #9
 
 | Field | Historical verified value |
 |---|---|
@@ -113,9 +158,9 @@ Prior successful execution evidence SHALL remain distinguishable from the curren
 | Deterministic validator | `success` |
 | Fixture-driven fail-closed tests | `success` |
 
-Run #9 is evidence for workflow v1.3 at its identified repository state. It SHALL NOT be retroactively treated as execution evidence for the v1.4 addition of `CI-EVIDENCE.md` to the trigger surface.
+Run #9 is evidence only for workflow v1.3 at its identified state. It SHALL NOT be retroactively treated as evidence for the v1.4 `CI-EVIDENCE.md` trigger.
 
-### 4.2 Execution lineage
+### 4.3 Execution lineage
 
 ```text
 v1.3
@@ -123,26 +168,39 @@ v1.3
   run:    #9 / 33282383199
   result: success
         |
-        | workflow control surface expanded
+        | architecture + implementation inventory governed
         v
 v1.4
   commit: 404e509eba958166c264636e0376d2b619880666
   run:    #10 / 33282520547
   result: success
+        |
+        | CI-EVIDENCE.md added to trigger surface
+        v
+v1.4 direct trigger-path validation
+  commit: b2802ed508af8c6ab055b53f07aca8b44ad0e95d
+  run:    #11 / 33282600271
+  result: success
 ```
-
-This lineage records progression of the control plane without erasing the execution state that preceded it.
 
 ---
 
 ## 5. Reproducibility Links
 
-### Current canonical v1.4 evidence
+### Current canonical direct trigger-path evidence
+
+Workflow run #11:  
+`https://github.com/emotionalinfrastructure/proof-of-signal/actions/runs/33282600271`
+
+Evidence commit:  
+`https://github.com/emotionalinfrastructure/proof-of-signal/commit/b2802ed508af8c6ab055b53f07aca8b44ad0e95d`
+
+### Historical v1.4 evidence
 
 Workflow run #10:  
 `https://github.com/emotionalinfrastructure/proof-of-signal/actions/runs/33282520547`
 
-Evidence commit:  
+Historical evidence commit:  
 `https://github.com/emotionalinfrastructure/proof-of-signal/commit/404e509eba958166c264636e0376d2b619880666`
 
 ### Historical v1.3 evidence
@@ -176,19 +234,19 @@ Architecture:
 CI evidence record:  
 `https://github.com/emotionalinfrastructure/proof-of-signal/blob/main/CI-EVIDENCE.md`
 
-For historical reproduction, reviewers SHOULD inspect repository files at the relevant evidence commit rather than assume current `main` remains byte-identical to the state evaluated by an earlier run.
+For historical reproduction, reviewers SHOULD inspect repository files at the relevant evidence commit rather than assume current `main` remains byte-identical to an earlier evaluated state.
 
 ---
 
 ## 6. Assurance Boundary
 
-The current canonical execution evidence supports the following bounded determination:
+The current canonical evidence supports the following bounded determination:
 
-> GitHub Actions executed Registry Conformance workflow v1.4 for commit `404e509eba958166c264636e0376d2b619880666`. Workflow run #10 completed successfully. The `Validate registry controls` job completed successfully. Both the deterministic registry conformance step and the fixture-driven fail-closed test step completed successfully.
+> A commit modifying `CI-EVIDENCE.md` directly triggered Registry Conformance workflow v1.4. GitHub Actions executed run #11 for commit `b2802ed508af8c6ab055b53f07aca8b44ad0e95d`; the `Validate registry controls` job completed successfully; and both the deterministic registry conformance step and fixture-driven fail-closed test step completed successfully.
 
-The historical evidence separately establishes the equivalent bounded execution result for workflow v1.3 at commit `2a9d1043dfd0b5fd485a14e5bbfadfd8a0e65a21` through run #9.
+Runs #10 and #9 separately establish successful execution for their respective earlier workflow states.
 
-Neither execution independently establishes:
+These executions do **not** independently establish:
 
 1. complete automation of AC-01 through AC-15;
 2. correctness of requirements outside the implemented validator;
@@ -212,16 +270,17 @@ A green CI result SHALL be interpreted only as evidence that the identified repo
 
 | Evidence proposition | Classification |
 |---|---|
-| Workflow run #10 exists for commit `404e509...` | Verified fact |
-| Run #10 was triggered by a push to `main` | Verified fact |
-| Run #10 completed successfully | Verified fact |
+| Run #11 exists for commit `b2802ed...` | Verified fact |
+| The triggering commit modified `CI-EVIDENCE.md` | Verified fact from repository change history |
+| Run #11 was triggered by a push to `main` | Verified fact |
+| Run #11 completed successfully | Verified fact |
 | Job `Validate registry controls` completed successfully | Verified fact |
-| Deterministic registry validation step succeeded | Verified fact |
-| Fixture-driven fail-closed test step succeeded | Verified fact |
-| Workflow v1.4 executed successfully for the tested repository state | Verified technical execution fact |
-| Run #9 remains a distinct successful v1.3 historical execution | Verified fact |
-| Every EII requirement is automated | Unsupported by this evidence |
+| Deterministic registry validation succeeded | Verified fact |
+| Fixture-driven fail-closed tests succeeded | Verified fact |
+| The `CI-EVIDENCE.md` push-trigger path operated successfully for this tested commit | Verified technical execution fact |
+| Every possible `CI-EVIDENCE.md` mutation will always trigger successfully | Not established by one execution |
 | CI is non-bypassable through repository policy | Not established by this evidence |
+| Every EII requirement is automated | Unsupported by this evidence |
 | The registry is independently certified | Unsupported by this evidence |
 | Underlying EII research is empirically validated by CI | Unsupported by this evidence |
 
@@ -229,17 +288,17 @@ A green CI result SHALL be interpreted only as evidence that the identified repo
 
 ## 8. Verification Procedure
 
-An independent reviewer can inspect the current canonical execution as follows:
+An independent reviewer can inspect the direct trigger-path evidence as follows:
 
-1. Open workflow run `33282520547` and confirm the head SHA is `404e509eba958166c264636e0376d2b619880666`.
-2. Confirm workflow name `Registry Conformance`, run number `10`, event `push`, status `completed`, and conclusion `success`.
-3. Open `Validate registry controls` and confirm job ID `99179974414` completed successfully.
-4. Confirm `Run deterministic registry conformance checks` concluded successfully.
-5. Confirm `Run fixture-driven fail-closed tests` concluded successfully.
-6. Inspect commit `404e509eba958166c264636e0376d2b619880666` to establish the exact repository state evaluated by run #10.
-7. Inspect workflow v1.4 at that commit and confirm `CI-EVIDENCE.md` is present in both the pull-request and push path-trigger surfaces.
-8. Inspect validator, tests, fixtures, test matrix, implementation inventory, and architecture at that same commit before drawing conclusions about the scope of assurance.
-9. For historical comparison, inspect run #9 and commit `2a9d1043dfd0b5fd485a14e5bbfadfd8a0e65a21` independently rather than applying v1.4 controls retroactively.
+1. Inspect commit `b2802ed508af8c6ab055b53f07aca8b44ad0e95d` and confirm `CI-EVIDENCE.md` was modified.
+2. Open workflow run `33282600271` and confirm the head SHA is `b2802ed508af8c6ab055b53f07aca8b44ad0e95d`.
+3. Confirm workflow name `Registry Conformance`, run number `11`, event `push`, status `completed`, and conclusion `success`.
+4. Open `Validate registry controls` and confirm job ID `99180177120` completed successfully.
+5. Confirm `Run deterministic registry conformance checks` concluded successfully.
+6. Confirm `Run fixture-driven fail-closed tests` concluded successfully.
+7. Inspect workflow v1.4 at the relevant repository state and confirm `CI-EVIDENCE.md` is included in the governed push path surface.
+8. Inspect validator, tests, fixtures, test matrix, implementation inventory, and architecture at the same evidence state before drawing conclusions about scope.
+9. Inspect runs #10 and #9 independently when reconstructing historical workflow evolution.
 
 The reviewer SHALL NOT infer controls absent from the implementation state associated with the relevant evidence commit.
 
@@ -247,9 +306,24 @@ The reviewer SHALL NOT infer controls absent from the implementation state assoc
 
 ## 9. Canonical Determination
 
-**Registry Conformance workflow v1.4 is execution-confirmed for commit `404e509eba958166c264636e0376d2b619880666`.**
+**Registry Conformance workflow v1.4 has direct trigger-path execution evidence for `CI-EVIDENCE.md` at commit `b2802ed508af8c6ab055b53f07aca8b44ad0e95d`.**
 
 Current canonical supporting evidence:
+
+```text
+Workflow: Registry Conformance v1.4
+Trigger artifact: CI-EVIDENCE.md
+Run: #11
+Run ID: 33282600271
+Commit: b2802ed508af8c6ab055b53f07aca8b44ad0e95d
+Job: Validate registry controls
+Job ID: 99180177120
+Run conclusion: success
+Deterministic validator: success
+Fixture-driven fail-closed tests: success
+```
+
+Historical predecessor, v1.4 definition execution:
 
 ```text
 Workflow: Registry Conformance v1.4
@@ -263,7 +337,7 @@ Deterministic validator: success
 Fixture-driven fail-closed tests: success
 ```
 
-Historical predecessor retained:
+Historical predecessor, v1.3 execution:
 
 ```text
 Workflow: Registry Conformance v1.3
@@ -287,3 +361,4 @@ This is first-party automated execution evidence for the implemented conformance
 |---|---|---|
 | `1.0` | v1.3 / run #9 | Established the initial canonical CI execution record. |
 | `1.1` | v1.4 / run #10 | Advanced the canonical reference to verified v1.4 execution and retained v1.3 / run #9 as historical provenance. |
+| `1.2` | v1.4 / run #11 | Recorded the first direct trigger-path validation of `CI-EVIDENCE.md` and retained runs #9 and #10 as historical execution lineage. |
